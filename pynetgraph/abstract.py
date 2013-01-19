@@ -1,4 +1,5 @@
 
+
 class AbstractGraph:
     def __init__(self, graphs={}, **kwargs):
         pass
@@ -23,3 +24,17 @@ class AbstractGraph:
 
     def matrix(self, node):
         pass  # Это ещё нужно сделать
+
+
+class ShortestPath:
+    def __init__(self, graph):
+        self.graph = graph
+
+    def run(self, start, end):
+        pass
+
+    def _final_path(self, resultpath, start, end):
+        pass
+
+    def result(self):
+        pass
