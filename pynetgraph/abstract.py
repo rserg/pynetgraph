@@ -38,3 +38,10 @@ class ShortestPath:
 
     def result(self):
         pass
+
+#codes algorithm for graph and trees
+class Codes:
+    def __init__(self, graph):
+        self.graph = graph
+    def tocode(self):
+        pass

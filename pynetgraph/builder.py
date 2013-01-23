@@ -83,4 +83,9 @@ class BullGraph(MakeGraph, Shape):
         self.graph[main] = output
 
 
-b = BuildGraph()
+class Tree(list):
+    def __init__(self, num,**kwargs):
+        self.num = num
+        self.attributes=kwargs
+        self.name=kwargs.get('name', 'tree')
+

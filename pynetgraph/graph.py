@@ -14,6 +14,7 @@ from abstract import AbstractGraph
 
 #Дуги между нодами, меняющиеся в зависимости от времени
 
+
 class GraphDict(dict):
     def __init__(self, *args, **kwargs):
         dict.__init__(self, *args, **kwargs)
@@ -26,6 +27,7 @@ class GraphDict(dict):
 class GraphError(Exception):
     def __init__(self, value):
         Exception.__init__(self)
+
 
 class StructNode:
     def __init__(self, node, value, attribute=[], **kwargs):
@@ -97,6 +99,7 @@ class Node:
     def get_node(self):
         return self.node
 
+
 class NodePosition(StructNode):
     def __init__(self, x, y, priority, distance):
         StructNode.__init__(None, None, x=x, y=y)
@@ -113,6 +116,7 @@ class NodePosition(StructNode):
         d = math.abs(goalx) + math.abs(goaly)
 
         return (d)
+
 
 class Edge:
     def __init__(self, inedge, outedge, **kwargs):
@@ -145,17 +149,9 @@ class Edge:
         self.password = kwargs.get('password')
         self.outedge.append(outedge)
 
-
-#Класс предназначенный для векторов ориентированных графов
-class OVector:
-    def __init__(self, array_vector):
-        self.array_vector = array_vector
-
-    def __len__(self):
-        return len(self.array_vector)
-
-
 #Вспомогательные функции для графа
+
+
 class HelpGraph:
     def __init__(self, hgrapg):
         self.hgrapg = hgrapg
@@ -164,9 +160,6 @@ class HelpGraph:
         if not isinstance(self.hgrapg, list):
             return [self.hgrapg]
         return self.hgrapg
-#Гамильтонов граф
-class HamiltonianGraph():
-    pass
 
 
 #Разные типы графов, где нужны проверки
@@ -185,6 +178,7 @@ class PastState:
         self.pastedge = edges
         self.pastconnection = connectivity
 
+
 class Graph(AbstractGraph):
     def __init__(self, graphs={}, **kwargs):
         super(Graph, self).__init__(graphs, **kwargs)
@@ -197,11 +191,12 @@ class Graph(AbstractGraph):
                 self.append_c(node, edge)
 
     def Zipped(zipfunc):
-        nodes={}
+        nodes = {}
         for node1, node2 in zipfunc:
             nodes[node1] = [node2]
         return Graph(nodes)
     #Check all nodes for exists
+
     def checknodes(self, nodes):
         for node in nodes:
             if not self.has_node(node):
@@ -412,7 +407,13 @@ class Graph(AbstractGraph):
     def clear(self):
         self.graphbase.clear()
 
+    #Query for graph attributes
+    def query(self, **kwargs):
+        kwargs.get('select')
+
 #Hypergraph area
+
+
 class HyperGraph(Graph):
     def __init__(self):
         self.node_neighboards = {}
