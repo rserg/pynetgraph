@@ -95,3 +95,50 @@ class PruferCode(Codes):
             heappush(prqueue, minvalue)
 
         return prqueue
+
+
+class Prim:
+    #graph = Tree in this case
+    def __init__(self, sgraph):
+        self.sgraph = sgraph
+        self.prev=[None]*self.sgraph.size()
+        self.key=[float("inf")]*self.sgraph.size()
+
+    def run(self,root):
+        #Nodes init to nil
+        #self.key[root] = 0
+        self.key[root] = 0
+        S=[]
+        dist={}
+        prev={}
+        heapify(S)
+        heappush(S,root)
+
+
+g = graph.Graph()
+g.add_node(1)
+g.add_node(2)
+g.add_node(3)
+g.add_node(4)
+g.add_node(5)
+g.add_node(6)
+g.add_node(7)
+g.add_node(8)
+#g.add_edge('a')
+g.add_edge(1,3,weight=7)
+g.add_edge(1,4,weight=4)
+g.add_edge(1,6,weight=3)
+g.add_edge(2,3,weight=2)
+g.add_edge(3,4,weight=3)
+g.add_edge(3,6,weight=6)
+g.add_edge(4,5,weight=1)
+g.add_edge(5,6,weight=3)
+g.add_edge(5,7,weight=2)
+g.add_edge(6,7,weight=4)
+g.add_edge(7,1,weight=1)
+g.add_edge(7,8,weight=4)
+g.add_edge(8,1,weight=2)
+#g.add_edge_random(4,max_weight=50)
+pr = Prim(g)
+pr.run(1)
+

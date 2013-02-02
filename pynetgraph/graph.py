@@ -18,7 +18,7 @@ from abstract import AbstractGraph
 class GraphDict(dict):
     def __init__(self, *args, **kwargs):
         dict.__init__(self, *args, **kwargs)
-        #self.graph = graph
+        # self.graph = graph
 
     def __setitem__(self, node, value):
         super(GraphDict, self).__setitem__(node, value)
@@ -49,7 +49,7 @@ class StructNode:
     '''def __new__(self,*args,**kwargs):
         self.check = 12'''
 
-    #Index exist
+    # Index exist
     def isIndex(self, idx):
         return idx in self.index
 
@@ -171,7 +171,7 @@ class OtherGraph:
         pass
 
 
-#Save past state of graph
+# Save past state of graph
 class PastState:
     def __init__(self, node, edges, connectivity=[]):
         self.pastnode = node
@@ -187,7 +187,7 @@ class Graph(AbstractGraph):
         self.last_results = []
         if graphs != None:
             for node, edge in graphs.items():
-                #self.checknodes(edge)
+                # self.checknodes(edge)
                 self.append_c(node, edge)
 
     def Zipped(zipfunc):
@@ -195,7 +195,7 @@ class Graph(AbstractGraph):
         for node1, node2 in zipfunc:
             nodes[node1] = [node2]
         return Graph(nodes)
-    #Check all nodes for exists
+    # Check all nodes for exists
 
     def checknodes(self, nodes):
         for node in nodes:
@@ -215,22 +215,37 @@ class Graph(AbstractGraph):
             self.graphbase[node] = StructNode(node, edge, attribute)
 
     def add_vertix(self, node):
-        #main represent of graph
+        # main represent of graph
         self.graphbase = {}
 
     def add_edge(self, inedge, outedge, **kwargs):
         self.check_and_create(inedge)
         self.check_and_create(outedge)
-        #assert self.has_nodes(HelpGraph(outedge).chesk_type())]
+        # assert self.has_nodes(HelpGraph(outedge).chesk_type())]
         if inedge in self.graphbase:
             self.graphbase[inedge].add_connect(Edge(inedge, outedge, **kwargs))
 
-    #Connection between edges (from two sides)
+    '''Add random connectuon between all nodes E
+    count - Number of iters
+    arguments: max_weight - maximum random weight
+
+    Add test for the case with similar nodes
+    '''
+    def add_edge_random(self, count, **kwargs):
+        maxweight = kwargs.get('weight',10)
+        from random import choice,randint
+        for node in range(count):
+            def chice():
+                return choice(self.edges())
+            self.add_edge(chice().node, chice().node,
+                weight =randint(0,maxweight))
+
+    # Connection between edges (from two sides)
     def connect(self, inedge, outedge, **kwargs):
         self.add_edge(inedge, outedge)
         self.add_edge(outedge, inedge)
 
-    #StructNode is connection
+    # StructNode is connection
     def add_node(self, node, **kwargs):
         if(not isinstance(node, StructNode)):
             self._add_nodeh(node, attribute=kwargs.get('attribute'), index=kwargs.get('index', []))
@@ -253,7 +268,7 @@ class Graph(AbstractGraph):
     def add_node_from(self, imps):
         yield from imps
 
-    #Add node and in the the absence case, raise Exception
+    # Add node and in the the absence case, raise Exception
     def add_node_exc(self, node, exception="StructNode already in graph"):
         if node in self.graphbase:
             raise GraphError(exception)
@@ -276,7 +291,7 @@ class Graph(AbstractGraph):
         for graph, node in self.graphbase.items():
             print(graph, node.value)
 
-    #high ordered func check
+    # high ordered func check
     def has_node_bind(self, check, node):
         return check(node)
 
@@ -312,7 +327,7 @@ class Graph(AbstractGraph):
     def sort_edges_by_weight(self):
         return sorted(self.edges(), key=lambda x: x.weight)
 
-    #Oprional. Восстановить если возможно
+    # Oprional. Восстановить если возможно
     #Нужен тест
     def recovery(self, key):
         result = list(filter(lambda x: x.pastnode, self.paststates))
@@ -324,13 +339,13 @@ class Graph(AbstractGraph):
         return [node for node in self.graphbase
                 if idx in self.graphbase[node].index]
 
-    #Size of Graph
+    # Size of Graph
     def size(self):
         return len(self.graphbase)
 
     #Проверить, существует ли нода и если нет, то создать
     def check_and_create(self, node):
-        #print(HelpGraph(node).chesk_type())
+        # print(HelpGraph(node).chesk_type())
         self.add_nodes(HelpGraph(node).chesk_type())
         '''if isinstance(node,list):
             self.add_nodes(node)
@@ -360,9 +375,9 @@ class Graph(AbstractGraph):
         self.graphbase[edge_in].set_edge(Edge(edge_in, ed, weight=wid))
 
     # Проверка на циклы
-    #http://code.google.com/p/python-graph/source/browse/trunk/core/pygraph/algorithms/cycles.py
-    #nodes - {'A':['B','C']}
-    #http://en.wikipedia.org/wiki/Tarjan%E2%80%99s_strongly_connected_components_algorithm
+    # http://code.google.com/p/python-graph/source/browse/trunk/core/pygraph/algorithms/cycles.py
+    # nodes - {'A':['B','C']}
+    # http://en.wikipedia.org/wiki/Tarjan%E2%80%99s_strongly_connected_components_algorithm
     def has_cyclic(self, nodes, another):
         spanning_tree = []
         if not has_nodes(nodes):
@@ -384,16 +399,6 @@ class Graph(AbstractGraph):
         if node in self.graphbase:
             self.graphbase[node].add_weight(weight)
 
-        #sub_nodes=[]
-#for nodes
-    #Матрица смежности
-    '''pattern for filtring nodes
-    example:
-    set of nodes ['B', 'D','A']
-    def notA(node):
-        node != 'A'
-    and after -> ['B','D']'''
-
     def filter_node(self, pattern):
         return list(filter(lambda x: pattern(x), self.graphbase))
 
@@ -407,11 +412,11 @@ class Graph(AbstractGraph):
     def clear(self):
         self.graphbase.clear()
 
-    #Query for graph attributes
+    # Query for graph attributes
     def query(self, **kwargs):
         kwargs.get('select')
 
-#Hypergraph area
+# Hypergraph area
 
 
 class HyperGraph(Graph):
